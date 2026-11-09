@@ -139,9 +139,17 @@ Swagger UI : http://localhost:8080/swagger-ui.html
 
 #### Développements du Côté Commande (Command Side)
 - Découpage par packages : Organisation du code en sous-packages (controllers, commands, dto ..)
-- Contrôleur de commande : Création d'un AccountCommandController injectant CommandGateway pour expédier les commandes (Send).
+- Contrôleur de commande : Création d'un AccountCommandController injectant CommandGateway pour expédier les commandes (Send). Avec les méthodes : POST pour addNewAccount et ExceptionHandler pour l'affichage des exceptions.
+    <br> par exemple avant la création du Handler :
+    ![img.png](img.png)
 - Commandes : Implémentation des classes de commandes immuables (AddAccountCommand ...)
-- Agrégat (AccountAggregate) : Annoté avec @Aggregate et identifié par @AggregateIdentifier.
+- Agrégat (AccountAggregate) : Annoté avec @Aggregate et identifié par @AggregateIdentifier. Avec un constructeur sans paramètre pour l'Axon, une méthode CommandHandler pour faire l'écoute du bus pour les requetes de type commande dont aprèes la vérification la fonction d'éxécute et utilise l'objet AggregateLifeCycle pour dispatcher les évenements.
+- Création de sévénements: Création du Package events global pour les deux cotés (Commands & query) dont on crée une classe imuable avec @Getter et @AllArgsConstructor
+- Handler de l'Aggregat : Dans la classe AccountAggregate on ajoute une méthode hanlder de l'aggregat @EventSourcingHandler qui initialise l'état de l'aggregat et avec laquelle on poura récupérer l'état de l'aggregat à partir des évenements dispatchés dans l'event store.
+- Ajout de quelque log avec l'utilisation du @Slf4j su lombok dans l'AccountAggregat
+    ![img_1.png](img_1.png)
+    ![img_2.png](img_2.png)
+    ![img_3.png](img_3.png)
 
 ---
 ## Référence

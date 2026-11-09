@@ -1,11 +1,12 @@
 package ma.formation.demoeventscqrsspringaxon.commands.controllers;
 
+import ma.formation.demoeventscqrsspringaxon.commands.commands.AddAccountCommand;
 import ma.formation.demoeventscqrsspringaxon.commands.dto.AddNewAccountRequestDTO;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/commands/accounts")
@@ -17,8 +18,17 @@ public class AccountCommandController {
     }
 
     @PostMapping("/add")
-    public String addNewAccount(@RequestBody AddNewAccountRequestDTO request){
-        commandGateway.send()
+    public CompletableFuture<String> addNewAccount(@RequestBody AddNewAccountRequestDTO request){
+         CompletableFuture<String> resposne =  commandGateway.send(new AddAccountCommand(
+                UUID.randomUUID().toString(),
+                request.initialBalance(),
+                request.currency()
+        ));
+         return resposne;
 
+    }
+    @ExceptionHandler(Exception.class)
+    public String exceptionHandler(Exception e){
+        return e.getMessage();
     }
 }
