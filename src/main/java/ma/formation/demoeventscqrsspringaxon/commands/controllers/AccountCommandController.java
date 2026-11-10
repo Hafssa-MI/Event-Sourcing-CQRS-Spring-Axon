@@ -3,9 +3,11 @@ package ma.formation.demoeventscqrsspringaxon.commands.controllers;
 import ma.formation.demoeventscqrsspringaxon.commands.commands.AddAccountCommand;
 import ma.formation.demoeventscqrsspringaxon.commands.commands.CreditAccountCommand;
 import ma.formation.demoeventscqrsspringaxon.commands.commands.DebitAccountCommand;
+import ma.formation.demoeventscqrsspringaxon.commands.commands.UpdateAccountStatusCommand;
 import ma.formation.demoeventscqrsspringaxon.commands.dto.AddNewAccountRequestDTO;
 import ma.formation.demoeventscqrsspringaxon.commands.dto.CreditAccountRequestDTO;
 import ma.formation.demoeventscqrsspringaxon.commands.dto.DebitAccountRequestDTO;
+import ma.formation.demoeventscqrsspringaxon.commands.dto.UpdateAccountStatusRequestDTO;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +57,16 @@ public class AccountCommandController {
         return resposne;
 
     }
+    @PutMapping("/updateStatus")
+    public CompletableFuture<String> debitAccount(@RequestBody UpdateAccountStatusRequestDTO request){
+        CompletableFuture<String> resposne =  commandGateway.send(new UpdateAccountStatusCommand(
+                request.accountId(),
+                request.status()
+        ));
+        return resposne;
+
+    }
+
 
     @ExceptionHandler(Exception.class)
     public String exceptionHandler(Exception e){
