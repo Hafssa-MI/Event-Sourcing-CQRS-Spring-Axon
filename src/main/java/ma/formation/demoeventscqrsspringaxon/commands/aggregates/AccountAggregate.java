@@ -3,10 +3,12 @@ package ma.formation.demoeventscqrsspringaxon.commands.aggregates;
 import lombok.extern.slf4j.Slf4j;
 import ma.formation.demoeventscqrsspringaxon.commands.commands.AddAccountCommand;
 import ma.formation.demoeventscqrsspringaxon.commands.commands.CreditAccountCommand;
+import ma.formation.demoeventscqrsspringaxon.commands.commands.DebitAccountCommand;
 import ma.formation.demoeventscqrsspringaxon.enums.AccountStatus;
 import ma.formation.demoeventscqrsspringaxon.events.AccountActivatedEvent;
 import ma.formation.demoeventscqrsspringaxon.events.AccountCreatedEvent;
 import ma.formation.demoeventscqrsspringaxon.events.AccountCreditedEvent;
+import ma.formation.demoeventscqrsspringaxon.events.AccountDebitedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -66,6 +68,25 @@ public class AccountAggregate {
         log.info("############## AccountCreditedEvent occured : #########");
         this.accountId = event.getAccountId();
         this.balance=this.balance+event.getAmount();
+    }
+
+    @CommandHandler
+    public void handle(DebitAccountCommand command){
+        log.info("############## DebitAccuntCommand Received : #########");
+        if(!status.equals(AccountStatus.ACTIVATED)) throw new RuntimeException("The account"+command.getId()+" Is not activated");
+        if(command.getAmount()<=0) throw new IllegalArgumentException("Amount doit etre positive");
+        if(balance<command.getAmount()) throw new IllegalArgumentException("Balance non suffisant");
+        AggregateLifecycle.apply(new AccountDebitedEvent(
+                command.getId(),
+                command.getAmount(),
+                command.getCurrency()
+        ));
+    }
+    @EventSourcingHandler
+    public void on(AccountDebitedEvent event){
+        log.info("############## AccountDebitedEvent occured : #########");
+        this.accountId = event.getAccountId();
+        this.balance=this.balance - event.getAmount();
     }
 
 }

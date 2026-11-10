@@ -155,9 +155,11 @@ Swagger UI : http://localhost:8080/swagger-ui.html
     ![img_11.png](img_11.png)
     ![img_12.png](img_12.png)
     ![img_13.png](img_13.png)
+    
 #### Implémentation des Événements (Events)
 - Création des objets d'événements (AccountCreatedEvent, AccountActivatedEvent, AccountCreditedEvent, AccountDebitedEvent, AccountStatusUpdatedEvent).
 - Configuration de la sérialisation du payload des événements en format JSON via Jackson.
+  ![img_14.png](img_14.png)
 
 #### Persistance avec PostgreSQL et Docker Compose
 - Création d'un fichier docker-compose.yml pour lancer un conteneur PostgreSQL et PgAdmin.
