@@ -156,6 +156,8 @@ Swagger UI : http://localhost:8080/swagger-ui.html
     ![img_12.png](img_12.png)
     ![img_13.png](img_13.png)
 - Débiter un compte et changer le status d'un compte suivent le meme principe.
+    ![img_15.png](img_15.png)
+    ![img_16.png](img_16.png)
     
 #### Implémentation des Événements (Events)
 - Création des objets d'événements (AccountCreatedEvent, AccountActivatedEvent, AccountCreditedEvent, AccountDebitedEvent, AccountStatusUpdatedEvent).
