@@ -1,15 +1,47 @@
-services:
-#  axonserver:
+#services:
+# axonserver:
 #    image: 'axoniq/axonserver:latest'
 #    environment:
 #      - 'AXONIQ_AXONSERVER_STANDALONE=TRUE'
 #    ports:
 #      - '8024:8024'
 #      - '8124:8124'
+#  postgres:
+#    image: 'postgres:latest'
+#    environment:
+#      - 'POSTGRES_DB=accounts_db'
+#      - 'POSTGRES_PASSWORD=1234'
+#      - 'POSTGRES_USER=admin'
+#    volumes:
+#      - es-accounts_data:/var/lib/postgresql/data
+#    ports:
+#      - '5432:5432'
+#    networks:
+#      - es-accounts-net
+#  pgadmin4:
+#    image: dpage/pgadmin4
+#    restart: always
+#    ports:
+#      - "8088:80"
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: med@gmail.com
+#      PGADMIN_DEFAULT_PASSWORD: azer
+#    volumes:
+#      - es-accounts_pgadmin_data:/var/lib/pgadmin
+#    networks:
+#      - es-accounts-net
+#volumes:
+#  es-accounts_data:
+#  es-accounts_pgadmin_data:
+#
+#networks:
+#  es-accounts-net:
+#    driver: bridge
+services:
   postgres:
-    image: 'postgres:latest'
+    image: 'postgres:17'
     environment:
-      - 'POSTGRES_DB=accounts_db'
+      - 'POSTGRES_DB=es-accounts_db'
       - 'POSTGRES_PASSWORD=1234'
       - 'POSTGRES_USER=admin'
     volumes:

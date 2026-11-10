@@ -2,8 +2,11 @@ package ma.formation.demoeventscqrsspringaxon.commands.aggregates;
 
 import lombok.extern.slf4j.Slf4j;
 import ma.formation.demoeventscqrsspringaxon.commands.commands.AddAccountCommand;
+import ma.formation.demoeventscqrsspringaxon.commands.commands.CreditAccountCommand;
 import ma.formation.demoeventscqrsspringaxon.enums.AccountStatus;
+import ma.formation.demoeventscqrsspringaxon.events.AccountActivatedEvent;
 import ma.formation.demoeventscqrsspringaxon.events.AccountCreatedEvent;
+import ma.formation.demoeventscqrsspringaxon.events.AccountCreditedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -29,6 +32,10 @@ public class AccountAggregate {
               AccountStatus.CREATED,
               command.getCurrency()
       ));
+      AggregateLifecycle.apply(new AccountActivatedEvent(
+              command.getId(),
+              AccountStatus.ACTIVATED
+      ));
   }
   @EventSourcingHandler
   public void on(AccountCreatedEvent event){
@@ -37,5 +44,28 @@ public class AccountAggregate {
       this.balance=event.getInitialBalance();
       this.status=event.getStatus();
   }
+    @EventSourcingHandler
+    public void on(AccountActivatedEvent event){
+        log.info("############## AccountActivatedEvent occured : #########");
+        this.accountId = event.getAccountId();
+        this.status=event.getStatus();
+    }
+  @CommandHandler
+  public void handle(CreditAccountCommand command){
+        log.info("############## CreditAccuntCommand Received : #########");
+        if(!status.equals(AccountStatus.ACTIVATED)) throw new RuntimeException("The account"+command.getId()+" Is not activated");
+        if(command.getAmount()<=0) throw new IllegalArgumentException("Amount doit etre positive");
+        AggregateLifecycle.apply(new AccountCreditedEvent(
+                command.getId(),
+                command.getAmount(),
+                command.getCurrency()
+        ));
+  }
+    @EventSourcingHandler
+    public void on(AccountCreditedEvent event){
+        log.info("############## AccountCreditedEvent occured : #########");
+        this.accountId = event.getAccountId();
+        this.balance=this.balance+event.getAmount();
+    }
 
 }
