@@ -172,6 +172,11 @@ Swagger UI : http://localhost:8080/swagger-ui.html
     ![img_5.png](img_5.png)
   * Test avec une méthode event store qui cherche dans l'event store tous les événements qui concernent un aggregat identifié par aggregate identifier <br>
     ![img_7.png](img_7.png)
+
+#### Développements du Côté Lecture (Query Side)
+- Création des entités Account et AccountOperation ainsi que de leurs interfaces Spring Data AccountRepository et AccountOperationRepository.
+- Création d'un AccountEventHandler annoté @EventHandler qui écoute les événements de l'Event Store et met à jour la base de lecture relationnelle.
+- 
 ---
 ## Référence
 
