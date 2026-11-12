@@ -181,6 +181,8 @@ Swagger UI : http://localhost:8080/swagger-ui.html
 - Création du contrôleur AccountQueryController utilisant QueryGateway.
     * localhost:8066/query/accounts/all : <br>
     ![img_17.png](img_17.png)
+    * localhost:8066/query/accounts/AccountStatement/e756cabc-99b5-439f-a1a7-2cf5ed99e263 <br>
+    ![img_18.png](img_18.png)
 ---
 ## Référence
 
