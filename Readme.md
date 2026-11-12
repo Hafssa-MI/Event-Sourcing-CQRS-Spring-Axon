@@ -176,7 +176,7 @@ Swagger UI : http://localhost:8080/swagger-ui.html
 #### Développements du Côté Lecture (Query Side)
 - Création des entités Account et AccountOperation ainsi que de leurs interfaces Spring Data AccountRepository et AccountOperationRepository.
 - Création d'un AccountEventHandler annoté @EventHandler qui écoute les événements de l'Event Store et met à jour la base de lecture relationnelle.
-- 
+- Gérer la création du compte, l'activation, le débit et le crédit.
 ---
 ## Référence
 
