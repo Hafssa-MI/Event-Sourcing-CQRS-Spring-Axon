@@ -190,7 +190,12 @@ Swagger UI : http://localhost:8080/swagger-ui.html
 - Utilisation de QueryUpdateEmitter dans les Event Handlers pour pousser chaque nouvelle opération (débit/crédit) directement vers le client Web en temps réel.
     ![img_19.png](img_19.png)
 
-
+#### Intégration d'Axon Server
+- Suppression de l'exclusion axon-server-connector dans le fichier pom.xml.
+- Ajout et démarrage du service Axon Server dans docker-compose.yml (port 8024).
+- Connexion du microservice à Axon Server via gRPC, déléguant ainsi la gestion centralisée de l'Event Store et le dispatching des événements et requêtes au serveur Axon.
+    ![img_20.png](img_20.png)
+    ![img_21.png](img_21.png)
 ---
 ## Référence
 
