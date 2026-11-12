@@ -177,6 +177,10 @@ Swagger UI : http://localhost:8080/swagger-ui.html
 - Création des entités Account et AccountOperation ainsi que de leurs interfaces Spring Data AccountRepository et AccountOperationRepository.
 - Création d'un AccountEventHandler annoté @EventHandler qui écoute les événements de l'Event Store et met à jour la base de lecture relationnelle.
 - Gérer la création du compte, l'activation, le débit et le crédit.
+- Requêtes et Handlers de lecture : Définition des classes de requêtes (GetAllAccountsQuery, GetAccountStatementQuery).
+- Création du contrôleur AccountQueryController utilisant QueryGateway.
+    * localhost:8066/query/accounts/all : <br>
+    ![img_17.png](img_17.png)
 ---
 ## Référence
 
