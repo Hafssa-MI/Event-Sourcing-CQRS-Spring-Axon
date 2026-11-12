@@ -5,6 +5,7 @@ import ma.formation.demoeventscqrsspringaxon.query.entities.Account;
 import ma.formation.demoeventscqrsspringaxon.query.entities.AccountOperation;
 import ma.formation.demoeventscqrsspringaxon.query.queries.GetAccountStatementQuery;
 import ma.formation.demoeventscqrsspringaxon.query.queries.GetAllAccountsQuery;
+import ma.formation.demoeventscqrsspringaxon.query.queries.WatchEventQuery;
 import ma.formation.demoeventscqrsspringaxon.query.repository.AccountRepository;
 import ma.formation.demoeventscqrsspringaxon.query.repository.OperationRepository;
 import org.axonframework.queryhandling.QueryHandler;
@@ -30,5 +31,9 @@ public class AccountQueryHandler {
         Account account=accountRepository.findById(query.getAccountId()).get();
         List<AccountOperation> operations=operationRepository.findByAccountId(query.getAccountId());
         return new AccountStatementReponseDTO(account, operations);
+    }
+    @QueryHandler
+    public AccountOperation on(WatchEventQuery query){
+        return AccountOperation.builder().build();
     }
 }

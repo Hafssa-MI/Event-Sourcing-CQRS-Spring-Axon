@@ -183,6 +183,14 @@ Swagger UI : http://localhost:8080/swagger-ui.html
     ![img_17.png](img_17.png)
     * localhost:8066/query/accounts/AccountStatement/e756cabc-99b5-439f-a1a7-2cf5ed99e263 <br>
     ![img_18.png](img_18.png)
+- Implémentation du AccountQueryHandler (@QueryHandler) pour lire les données projetées en base et retourner les DTOs.
+
+#### Streaming des événements en temps réel (SSE)
+- Ajout de Reactor Core et mise en place d'un endpoint watch dans le contrôleur de lecture retournant un Flux<AccountOperation>
+- Utilisation de QueryUpdateEmitter dans les Event Handlers pour pousser chaque nouvelle opération (débit/crédit) directement vers le client Web en temps réel.
+    ![img_19.png](img_19.png)
+
+
 ---
 ## Référence
 
